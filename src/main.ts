@@ -6,6 +6,9 @@ import { PrismaClientExceptionFilter } from './common/filters/prisma-exception.f
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
+
+    app.setGlobalPrefix('api/v1');
+
     app.use(cookieParser());
 
     app.useGlobalPipes(
@@ -29,8 +32,8 @@ async function bootstrap() {
         credentials: true,
     });
 
-    await app.listen(3000);
-    console.log('Server running on http://localhost:3000');
+    await app.listen(8080);
+    console.log('🚀 ~ Server running on http://localhost:8080/api/v1');
 }
 
 bootstrap();

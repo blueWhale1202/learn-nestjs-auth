@@ -14,7 +14,8 @@ export class LoggerMiddleware implements NestMiddleware {
             );
 
             if (body) {
-                console.log(`Request Body: ${JSON.stringify(body)}`);
+                console.log(`🚚 ~ Request Body`);
+                console.dir(body, { depth: null });
             }
 
             if (res.statusCode >= 400) {

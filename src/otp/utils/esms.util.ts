@@ -12,7 +12,7 @@ export async function sendOtpViaESMS(phone: string, otp: string): Promise<any> {
         Brandname: 'Baotrixemay',
         SmsType: '2',
         IsUnicode: '0',
-        Sandbox: '1', // Dùng môi trường test
+        Sandbox: '1', // Set to '1' for testing, '0' for production
     };
 
     try {

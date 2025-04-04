@@ -14,7 +14,7 @@ export class OtpService {
         const lastSentAt = this.otpThrottle.get(phone);
         if (!lastSentAt) return true;
         const currentTime = Date.now();
-        return currentTime - lastSentAt >= 60000; // Cho phép sau 60 giây
+        return currentTime - lastSentAt >= 60000;
     }
 
     private updateThrottle(phone: string): void {
@@ -30,13 +30,13 @@ export class OtpService {
         setTimeout(() => {
             this.otpStore.delete(phone);
             console.log(`OTP for ${phone} has expired and been removed.`);
-        }, 60000); // Xóa OTP sau 60 giây
+        }, 60000);
     }
 
     async sendOtp(phone: string): Promise<string> {
         if (!this.canSendOtp(phone)) {
             throw new Error(
-                'OTP đã được gửi, vui lòng chờ 60 giây để gửi lại.',
+                'OTP has already been sent, please wait 60 seconds to resend.',
             );
         }
 
@@ -51,11 +51,12 @@ export class OtpService {
     verifyOtp(phone: string, otp: string): boolean {
         const storedOtp = this.otpStore.get(phone);
         if (!storedOtp) {
-            throw new BadRequestException('OTP không tồn tại hoặc đã hết hạn.');
+            // throw new BadRequestException('OTP không tồn tại hoặc đã hết hạn.');
+            throw new BadRequestException('OTP does not exist or has expired.');
         }
 
         if (storedOtp !== otp) {
-            throw new BadRequestException('OTP không đúng.');
+            throw new BadRequestException('OTP is incorrect.');
         }
 
         this.otpStore.delete(phone);
