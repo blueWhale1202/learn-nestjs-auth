@@ -34,7 +34,7 @@ export class AuthService {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
-            maxAge: 60 * 60 * 1000, // 1 hour
+            maxAge: 60 * 60 * 1000,
         });
         return {
             message: 'Login successful',
@@ -69,8 +69,7 @@ export class AuthService {
             data: { phone, password: hashedPassword, role: 'user' },
         });
 
-        // Chỉ gọi hàm gửi OTP, không tự tạo OTP trong hàm này
-        await this.otpService.sendOtp(phone); // Gửi OTP qua SMS
+        await this.otpService.sendOtp(phone);
         return user;
     }
 
@@ -87,8 +86,7 @@ export class AuthService {
             throw new UnauthorizedException('Phone number not found');
         }
 
-        // Gọi hàm gửi OTP, không tự tạo OTP tại đây
-        await this.otpService.sendOtp(phone); // Gửi OTP qua SMS
+        await this.otpService.sendOtp(phone);
         return 'OTP sent for password reset';
     }
 
